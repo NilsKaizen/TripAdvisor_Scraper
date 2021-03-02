@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 
 def links_getter(driver):
@@ -15,14 +16,14 @@ def links_getter(driver):
 
     restaurant_links = {}
 
-    for i in range(2, no_pages, 1):
+    for i in range(2, 6, 1):
         actions = ActionChains(driver)
 
         try:
             restaurants = WebDriverWait(driver, 10).until(
                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div[data-widget-type='LOCATIONS']"))
             )
-            restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:11] if
+            restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:4] if
                            len(r.find_elements_by_tag_name("a")) > 0]
             restaurant_links[i - 1] = restaurants
         except:
@@ -33,7 +34,7 @@ def links_getter(driver):
             next_page = next_page.find_element_by_css_selector(f"a[data-page='{i}']")
             actions.click(next_page)
             actions.perform()
-            driver.implicitly_wait(5)
+            time.sleep(5)
 
         print(i - 1, "Page Links Done")
 

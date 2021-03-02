@@ -17,7 +17,7 @@ try:
 
     driver.get("https://www.tripadvisor.com/")
     driver.implicitly_wait(5)
-    # driver.maximize_window()
+    driver.maximize_window()
 
     # Go to restaurants tab and search your city
     print()
@@ -25,6 +25,7 @@ try:
     print()
     search_actions = ActionChains(driver)
 
+    # Select the city to search
     search_bar = driver.find_elements_by_tag_name("form")[1].find_element_by_tag_name("input")
     search_bar.send_keys("Verona, Italy")
     search_bar.send_keys(Keys.RETURN)
@@ -106,7 +107,7 @@ except:
 finally:
     driver.quit()
 
-rest_table.to_excel(r'C: YOUR DESTINATION PATH \RestaurantTripAdvisor.xlsx')
+rest_table.to_excel(r'C: YOU DESTINATION FOLDER RestaurantTest.xlsx')
 print()
 print("Scraping Done!")
 print()
