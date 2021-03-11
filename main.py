@@ -10,9 +10,10 @@ import time
 import pandas as pd
 import links_getter as lg
 import restaurant_scrap as rs
+import sql_administrator as sql
 
 try:
-    PATH = "WEB DRIVER PATH"
+    PATH = "PATH"
     driver = webdriver.Chrome(PATH)
 
     driver.get("https://www.tripadvisor.com/")
@@ -26,7 +27,8 @@ try:
     search_actions = ActionChains(driver)
 
     # Select the city to search
-    search_bar = driver.find_elements_by_tag_name("form")[1].find_element_by_tag_name("input")
+    search_bar = driver.find_elements_by_tag_name(
+        "form")[1].find_element_by_tag_name("input")
     search_bar.send_keys("Verona, Italy")
     search_bar.send_keys(Keys.RETURN)
 
@@ -35,11 +37,11 @@ try:
     print()
     print("Navigating to Restaurants ...")
     print()
-    rest_button = driver.find_element_by_css_selector("a[ data-filter-id='EATERY']")
+    rest_button = driver.find_element_by_css_selector(
+        "a[ data-filter-id='EATERY']")
     search_actions.move_to_element(rest_button)
     search_actions.click()
     search_actions.perform()
-
 
     time.sleep(5)
 
@@ -47,8 +49,9 @@ try:
     rest_links = lg.links_getter(driver)
 
     # Restaurants Scraping
+
     name = []
-    trip_rating = []
+    trip_rat = []
     food_rat = []
     service_rat = []
     value_rat = []
@@ -64,51 +67,72 @@ try:
     print("Scraping the Restaurants Information ...")
     print()
 
-    for k, group_link in rest_links.items():
-        print()
-        print(f"Scraping Page {k}...")
+    rest_table = pd.DataFrame(data={"Title": ["Restaurants"]})
 
-        for link in group_link:
+    with pd.ExcelWriter('RestaurantTest.xlsx') as writer_restaurants:  # pylint: disable=abstract-class-instantiated
+        rest_table.to_excel(writer_restaurants, sheet_name="Title")
 
-            rest = rs.rest_scrap(link)
+        for k, group_link in rest_links.items():
+            print()
+            print(f"Scraping Page {k}...")
 
-            name.append(rest.name)
-            trip_rating.append(rest.trip_rating)
-            food_rat.append(rest.food_rat)
-            service_rat.append(rest.service_rat)
-            value_rat.append(rest.value_rat)
-            no_reviews.append(rest.no_reviews)
-            type_food.append(rest.type_food)
-            direction.append(rest.direction)
-            phone.append(rest.phone)
-            price_range.append(rest.price_range)
-            website.append(rest.website)
-            special_diets.append(rest.special_diets)
+            for link in group_link:
 
+                rest = rs.rest_scrap(link)
 
-            print(f"{rest.name} Done!")
+                name.append(rest.name)
+                trip_rat.append(rest.trip_rat)
+                food_rat.append(rest.food_rat)
+                service_rat.append(rest.service_rat)
+                value_rat.append(rest.value_rat)
+                no_reviews.append(rest.no_reviews)
+                type_food.append(rest.type_food)
+                direction.append(rest.direction)
+                phone.append(rest.phone)
+                price_range.append(rest.price_range)
+                website.append(rest.website)
+                special_diets.append(rest.special_diets)
 
-        print()
-        print(f"Page {k} Done!")
-        print()
+                # Write into sqlite Database
+                sql.insert_restaurant_mysql(rest)
 
-    # Create and Save Table
-    print()
-    print("Creating a Table and exporting information ... ")
-    print()
-    rest_table = pd.DataFrame(data={"Name" : name, "Trip Rating" : trip_rating, "Food Rating": food_rat,
-                                     "Service Rating": service_rat, "Value Rating": value_rat, "Nº Reviews": no_reviews,
-                                     "Type of Food": type_food, "Direction": direction, "Phone": phone, "Website": website,
-                                     "Price Range": price_range, "Special Diets": special_diets})
+                print(f"{rest.name} Done!")
 
+            print()
+            print(f"Page {k} Done!")
+            print()
 
-except:
+            # Create and Save Table
+            print()
+            print("Creating a Table and exporting information ... ")
+            print()
+            rest_table = pd.DataFrame(data={"Name": name, "Trip Rating": trip_rat, "Food Rating": food_rat,
+                                            "Service Rating": service_rat, "Value Rating": value_rat, "Nº Reviews": no_reviews,
+                                            "Type of Food": type_food, "Direction": direction, "Phone": phone, "Website": website,
+                                            "Price Range": price_range, "Special Diets": special_diets})
+            # print(rest_table)
+            rest_table.to_excel(writer_restaurants, sheet_name=f"Page {k}")
+            name.clear()
+            trip_rat.clear()
+            food_rat.clear()
+            service_rat.clear()
+            value_rat.clear()
+            no_reviews.clear()
+            type_food.clear()
+            direction.clear()
+            phone.clear()
+            price_range.clear()
+            website.clear()
+            special_diets.clear()
+
+except BaseException as e:
+    print("ERROR:", str(e))
     driver.quit()
 finally:
+    # sql.conn.close()
     driver.quit()
 
-rest_table.to_excel(r'C: YOU DESTINATION FOLDER RestaurantTest.xlsx')
+
 print()
 print("Scraping Done!")
 print()
-
