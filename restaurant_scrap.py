@@ -99,7 +99,7 @@ def rest_scrap(link):
                 special_diets = driver.find_elements_by_css_selector("div._1XLfiSsv")[
                     i].text
     except Exception as e:
-        print("ERROR: ", e)
+        print("ERROR: (rest_scrap, price_range, type_food, special_diets)", str(e))
         price_range = "N.A"
         type_food = "N.A"
         special_diets = "N.A"

@@ -11,6 +11,7 @@ import pandas as pd
 import links_getter as lg
 import restaurant_scrap as rs
 import sql_administrator as sql
+import data_cleaning as dc
 
 try:
     PATH = "PATH"
@@ -46,7 +47,10 @@ try:
     time.sleep(5)
 
     # Get all restaurants links from page
-    rest_links = lg.links_getter(driver)
+    try:
+        rest_links = lg.links_getter(driver)
+    except Exception as e:
+        print('ERROR: (rest_links, main)', str(e))
 
     # Restaurants Scraping
 
@@ -69,7 +73,7 @@ try:
 
     rest_table = pd.DataFrame(data={"Title": ["Restaurants"]})
 
-    with pd.ExcelWriter('RestaurantTest.xlsx') as writer_restaurants:  # pylint: disable=abstract-class-instantiated
+    with pd.ExcelWriter('New_RestaurantTest.xlsx') as writer_restaurants:  # pylint: disable=abstract-class-instantiated
         rest_table.to_excel(writer_restaurants, sheet_name="Title")
 
         for k, group_link in rest_links.items():
@@ -92,6 +96,10 @@ try:
                 price_range.append(rest.price_range)
                 website.append(rest.website)
                 special_diets.append(rest.special_diets)
+
+                # Get all food and special diets categories from the restaurant
+                dc.separate_types(rest.type_food, True)
+                dc.separate_types(rest.special_diets, False)
 
                 # Write into sqlite Database
                 sql.insert_restaurant_mysql(rest)
@@ -125,8 +133,15 @@ try:
             website.clear()
             special_diets.clear()
 
+    # MySQL
+    sql.create_categories_tables(
+        dc.return_food_categories(), dc.return_special_diets_categories())
+
+    sql.populate_food_categories_table()
+    sql.populate_special_categories_table()
+
 except BaseException as e:
-    print("ERROR:", str(e))
+    print("ERROR: (main)", str(e))
     driver.quit()
 finally:
     # sql.conn.close()

@@ -17,10 +17,10 @@ def links_getter(driver):
 
     restaurant_links = {}
     links = pd.DataFrame(data={"Title": ["Links"]})
-    with pd.ExcelWriter('RestaurantLinks.xlsx') as writer_links:  # pylint: disable=abstract-class-instantiated
+    with pd.ExcelWriter('New_RestaurantLinks.xlsx') as writer_links:  # pylint: disable=abstract-class-instantiated
         links.to_excel(writer_links, sheet_name="Title")
 
-        for i in range(2, 4, 1):
+        for i in range(2, no_pages + 1, 1):
             actions = ActionChains(driver)
             driver.execute_script(
 
@@ -31,14 +31,15 @@ def links_getter(driver):
                     EC.presence_of_all_elements_located(
                         (By.CSS_SELECTOR, "div[data-widget-type='LOCATIONS']"))
                 )
-                restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:5] if
+                # print('Length restaurants: ', len(restaurants))
+                restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:] if
                                len(r.find_elements_by_tag_name("a")) > 0]
                 restaurant_links[i - 1] = restaurants
 
                 links = pd.DataFrame(data={f"Links Page{i-1}": restaurants})
                 links.to_excel(writer_links, sheet_name=f"Links Page {i-1}")
             except Exception as e:
-                print("ERROR: ", e)
+                print("ERROR: (restaurant_links, links_getter)", e)
                 print(f"Not able to get links in page {i-1}")
             finally:
 

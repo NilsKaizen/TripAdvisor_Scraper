@@ -1,0 +1,27 @@
+Dividir por: 
+- Tipos de comida
+- Special Diets
+- Localización en verona
+
+Dar una valor subjetivo (Dummy Variable) según el numero de reviews en ratings: mySQL in python
+(Lo que asignará un peso al resultado) 
+< 100 = 0
+100 <= x < 300 = 1
+>= 500 = 2
+
+Añadir 3 columnas más de True (1) - False (0) en additional_info:
+Vegetarian Friendly
+Vegan Options
+Gluten Free
+
+EN PYTHON: 
+Separar type_food en opciones Python OK!
+sacar todas las opciones que hay y crear una columna por cada opción mySQL in python
+
+Separar special_diets en opciones Python OK!
+sacar todas las opciones que hay y crear una columna por cada opción mySQL in python
+
+
+
+
+
