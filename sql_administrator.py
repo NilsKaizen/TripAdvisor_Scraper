@@ -5,19 +5,19 @@ import mysql.connector
 # password = "password",
 # database = "database"
 
-config = {  # host = "host",
-    # user = "username",
-    # password = "password",
-    # database = "database"}
+config = {'host': "host",
+          'user ': "username",
+          'password': "password",
+          'database': "database"}
 
 # mycursor = db.cursor()
 # mycursor.close()
 
 # Create a Database in MySQL
 db = mysql.connector.connect(
-    # host = "host",
-    # user = "username",
-    # password = "password",
+    host="host",
+    user="username",
+    password="password",
 )
 mycursor = db.cursor()
 
