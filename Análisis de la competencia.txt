@@ -1,15 +1,15 @@
 Dividir por: 
-- Tipos de comida
-- Special Diets
+- Tipos de comida OK!!
+- Special Diets OK!!
 - Localización en verona
 
-Dar una valor subjetivo (Dummy Variable) según el numero de reviews en ratings: mySQL in python
+Dar una valor subjetivo (Dummy Variable) según el numero de reviews en ratings: mySQL in python OK!!
 (Lo que asignará un peso al resultado) 
 < 100 = 0
 100 <= x < 300 = 1
 >= 500 = 2
 
-Añadir 3 columnas más de True (1) - False (0) en additional_info:
+Añadir 3 columnas más de True (1) - False (0) en additional_info: OK!!
 Vegetarian Friendly
 Vegan Options
 Gluten Free

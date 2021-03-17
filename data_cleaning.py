@@ -53,3 +53,5 @@ def return_special_diets_categories():
 
 # sql.create_categories_tables(test_list, test_list)
 # sql.populate_food_categories_table(test_tuples)
+
+sql.ponderate_ratings()

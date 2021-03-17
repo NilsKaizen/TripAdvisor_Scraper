@@ -4,4 +4,4 @@ PATH = "C:/Program Files (x86)/chromedriver.exe"
     host="localhost",
     user="root",
     password="MySQLPassword",
-    database="scrap_rest"
+    database="new_scrap_rest"
