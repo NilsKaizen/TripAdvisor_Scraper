@@ -1,34 +1,31 @@
 import sql_administrator as sql
 
-food_categories = []
-special_diets_categories = []
 
-
-def separate_types(types, food=True):
+def separate_types(types):
     ''' Search in every restaurant the types of food that it serves
     or special diets and separates them creating a list of categories '''
 
-    if types.find(",") == True:
+    food_categories = []
+    types = str(types)
+
+    if isinstance(types, str) == False:
         types = types.split(",")
 
-    if food:
         for cate in types:
+            cate = cate.strip()
+            cate = cate.lower()
+            cate = cate.replace(' ', '_')
+            cate = cate.replace('-', '_')
+            cate = cate.replace('n.a', 'n_a')
+
             if cate not in food_categories:
                 food_categories.append(cate.lower())
     else:
-        for cate in types:
-            if cate not in special_diets_categories:
-                special_diets_categories.append(cate.lower())
+        if type not in food_categories:
+            food_categories.append(types)
 
-
-def return_food_categories():
     food_categories.sort()
     return food_categories
-
-
-def return_special_diets_categories():
-    special_diets_categories.sort()
-    return special_diets_categories
 
 
 # x = ['a,f,h', 'a,b,d', 'c,c', 'e', 'g,g,a']
@@ -50,8 +47,3 @@ def return_special_diets_categories():
 #                (5, 'a')]
 
 # test_list = ['a', 'b', 'c', 'd']
-
-# sql.create_categories_tables(test_list, test_list)
-# sql.populate_food_categories_table(test_tuples)
-
-sql.ponderate_ratings()

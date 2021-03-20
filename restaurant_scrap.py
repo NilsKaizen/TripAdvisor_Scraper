@@ -10,9 +10,10 @@ import time
 
 import sql_administrator as sql
 
+
 def rest_scrap(link):
 
-    PATH = "C:/Program Files (x86)/chromedriver.exe"
+    PATH = "PATH"
     driver = webdriver.Chrome(PATH)
 
     driver.get(link)
@@ -146,9 +147,3 @@ class Restaurant:
         self.price_range = price_range
         self.website = website
         self.special_diets = special_diets
-
-
-# rest = rest_scrap(
-#     "https://www.tripadvisor.com/Restaurant_Review-g187871-d2272025-Reviews-Ristorante_Pizzeria_Nastro_Azzurro-Verona_Province_of_Verona_Veneto.html#REVIEWS")
-
-# sql.insert_restaurant_mysql(rest)

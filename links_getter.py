@@ -32,11 +32,11 @@ def links_getter(driver):
                         (By.CSS_SELECTOR, "div[data-widget-type='LOCATIONS']"))
                 )
                 # print('Length restaurants: ', len(restaurants))
-                restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:] if
+                restaurants = [r.find_element_by_tag_name("a").get_attribute("href") for r in restaurants[1:30] if
                                len(r.find_elements_by_tag_name("a")) > 0]
                 restaurant_links[i - 1] = restaurants
 
-                links = pd.DataFrame(data={f"Links Page{i-1}": restaurants})
+                links = pd.DataFrame(data={f"Links Page {i-1}": restaurants})
                 links.to_excel(writer_links, sheet_name=f"Links Page {i-1}")
             except Exception as e:
                 print("ERROR: (restaurant_links, links_getter)", e)
