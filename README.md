@@ -29,6 +29,7 @@ the most valuable caracteristic in a restaurant.
 	
 
 ## STEPS AND APPROACH TO THE PROJECT:
+(Running Time 3 hours aprox. Dipending on your computer and your internet connection)
 
 	0. Set the database and the tables in MySQL and design the structure
 	1. Get all links from the restaurants by page and save into Excel File
@@ -54,8 +55,30 @@ the most valuable caracteristic in a restaurant.
 		(This research is already biassed because only take into accoount the restaurnts
 		in Trip Advisor Webpage)
 
-### 1. Get the links: 
+### 1. Get the links: (links_getter)
 	I decided to srap the links and save them into excel sheets for every page, 
 	because in case that the code crashes I can start from the page I was before, 
 	and not from very the beginning.
+	And Links are also saved into a variable in the code. 
+
+### 2. Save data into MySQL: (sql_administrator)
+	For every links Scrap the info and save it into MySQL tables and into Excel file
+	
+### 3. Do data preprocessing and cleaning (data_cleaning)
+	Change spaces for '_'
+	Set N.A values for Null values
+
+### 4. Upload data into MySQL: (sql_administrator)
+	Once all restaurants were scraped fetch all food types and special diets and 
+	create two tables with all options.
+	Then create another table with rating poinderation. 
+	
+
+### IF ERROR APPEARS:
+	Sometimes an error occur during scraping due to internet connection so you have to 
+	Check the New_RestaurantsLinks.xlsx file if you have all the links you need
+	If not: Re-run the script, or go to parts_scrap/links_getter and run it. 
+	else: Go to parts_scrap/scrap_rest_info_from_excel_links('New_RestaurantsLinks.xlsx') and 
+	run it. 
+
 
