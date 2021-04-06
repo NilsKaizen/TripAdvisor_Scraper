@@ -6,7 +6,7 @@ import data_cleaning as dc
 import parts_scrap as ps
 
 try:
-    PATH = "PATH"
+    PATH = "C:/Program Files (x86)/chromedriver.exe"
     driver = webdriver.Chrome(PATH)
     # Create Database
     sql.create_database_mysql()
@@ -20,11 +20,11 @@ try:
     ps.restaurant_scraping(rest_links)
 
     # MySQL
-    sql.ponderate_ratings()
-    sql.get_food_and_specials_categories()
+    # sql.ponderate_ratings()
+    # sql.get_food_and_specials_categories()
 
-    sql.populate_food_categories_table()
-    sql.populate_special_categories_table()
+    # sql.populate_food_categories_table()
+    # sql.populate_special_categories_table()
 
 except Exception as e:
     print("ERROR: (main)", str(e))

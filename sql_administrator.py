@@ -11,10 +11,10 @@ import data_cleaning as dc
 #  'password': "password",
 #  'database': "database"}
 
-config = {'host' : "host",
-          'user' : "username",
-          'password' : "password",
-          'database' : "database"}
+config = {'host': "host",
+          'user': "username",
+          'password': "password",
+          'database': "database"}
 
 # mycursor = db.cursor()
 # mycursor.close()
@@ -127,7 +127,7 @@ def create_categories_tables(cat_food, cat_special):
                     (restaurant_id INT NOT NULL,
                     {cat_special_columns}
                     other INT NOT NULL DEFAULT '0') """)
-       
+
         mycursor.close()
         db.close()
     except Exception as e:
@@ -240,6 +240,7 @@ def populate_special_categories_table():
         db.close()
     except Exception as e:
         print('ERROR: (populate_special_categories_table)', str(e))
+
 
 def ponderate_ratings():
     ''' Create a Table called ratings_ponderate to give every restaurant a status in order to it's no_ratings

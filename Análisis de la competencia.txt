@@ -21,6 +21,16 @@ sacar todas las opciones que hay y crear una columna por cada opción mySQL in p
 Separar special_diets en opciones Python OK!
 sacar todas las opciones que hay y crear una columna por cada opción mySQL in python
 
+Exportar excel con restaurantes desde MySQL para tenerlo guardado
+
+Crear Excel Con restaurantes y despues pasarlo a MySQL usando multiple execute
+
+Separar los pipos de comidas en secciones más grandes y después crear la tabla de MySQL
+
+Numpy
+
+Analizar missing values y ver como sustituirlos 
+
 
 
 

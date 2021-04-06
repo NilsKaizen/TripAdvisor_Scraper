@@ -1,7 +1,0 @@
-PATH = "C:/Program Files (x86)/chromedriver.exe"
-
-# SQL
-    host="localhost",
-    user="root",
-    password="MySQLPassword",
-    database="new_scrap_rest"
